@@ -11,24 +11,20 @@ namespace WebAPISample.Controllers
 {
     public class ProductsController : ApiController
     {
-        CategoriesController catcon = new CategoriesController(); //Instantiates Categories Controller to be able to access its public classes
         Product[] products = new Product[]
         {
             new Product { Id = 1, Name = "Tomato Soup", CategoryId = 1, Price = 1 },
             new Product { Id = 2, Name = "Yo-yo", CategoryId = 2, Price = 3.75M },
             new Product { Id = 3, Name = "Hammer", CategoryId = 3, Price = 16.99M }
         };
-/*
         Category[] categories = new Category[]
         {
             new Category { Id= 1, Name = "Groceries" },
             new Category { Id= 2, Name = "Toys" },
             new Category { Id= 3, Name = "Hardware" }
         };
-        */
         public IHttpActionResult GetAllProducts()
         {
-            Category[] categories = catcon.getCategories(); //Initializes categories array and setting its value by getting the values set on the Cateories controller via its public get function getCategories().
             List<ExpandoObject> productlist = new List<ExpandoObject>(); //Declares a List ExpandoObject, an object with dynamic properties to be able to create an object that includes the category name.
             foreach(Product prod in products)
             {
@@ -72,7 +68,6 @@ namespace WebAPISample.Controllers
 
         private Product getByCategory(String category) // function that returns product if found null if not based on category name
         {
-            Category[] categories = catcon.getCategories(); //Initializes categories array and setting its value by getting the values set on the Cateories controller via its public get function getCategories().
             Category cat = categories.FirstOrDefault((c) => c.Name.ToLower() == category.ToLower()); //finding category from catrgories array based on category name.
             if(cat == null)
             {
